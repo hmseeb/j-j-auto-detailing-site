@@ -102,26 +102,6 @@ const $$ = (selector, context = document) => [...context.querySelectorAll(select
   });
 })();
 
-/* ---------- INTERSECTION OBSERVER (reveal animations) ---------- */
-(function initReveal() {
-  if (!('IntersectionObserver' in window)) {
-    // Fallback: show all
-    $$('.reveal, .reveal-stagger').forEach(el => el.classList.add('visible'));
-    return;
-  }
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-
-  $$('.reveal, .reveal-stagger').forEach(el => observer.observe(el));
-})();
-
 /* ---------- ADD REVEAL CLASSES TO ELEMENTS ---------- */
 (function addRevealClasses() {
   // Section headers
@@ -153,6 +133,26 @@ const $$ = (selector, context = document) => [...context.querySelectorAll(select
   const contactForm = $('.contact__form-wrap');
   if (contactInfo) contactInfo.classList.add('reveal');
   if (contactForm) contactForm.classList.add('reveal');
+})();
+
+/* ---------- INTERSECTION OBSERVER (reveal animations) ---------- */
+(function initReveal() {
+  if (!('IntersectionObserver' in window)) {
+    // Fallback: show all
+    $$('.reveal, .reveal-stagger').forEach(el => el.classList.add('visible'));
+    return;
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+  $$('.reveal, .reveal-stagger').forEach(el => observer.observe(el));
 })();
 
 /* ---------- CONTACT FORM ---------- */
