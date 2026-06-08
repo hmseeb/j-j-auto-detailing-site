@@ -1409,30 +1409,31 @@ a.contact__detail-value:hover {
   }
 }
 
-.reveal {
+/* Only hide elements for animation when JS is confirmed running */
+.has-js .reveal {
   opacity: 0;
   transform: translateY(30px);
   transition: opacity .6s ease, transform .6s ease;
 }
 
-.reveal.visible {
+.has-js .reveal.visible {
   opacity: 1;
   transform: translateY(0);
 }
 
-/* Stagger children */
-.reveal-stagger > * {
+/* Stagger children — only hidden when JS is active */
+.has-js .reveal-stagger > * {
   opacity: 0;
   transform: translateY(24px);
   transition: opacity .5s ease, transform .5s ease;
 }
 
-.reveal-stagger.visible > *:nth-child(1) { transition-delay: .05s; opacity: 1; transform: none; }
-.reveal-stagger.visible > *:nth-child(2) { transition-delay: .15s; opacity: 1; transform: none; }
-.reveal-stagger.visible > *:nth-child(3) { transition-delay: .25s; opacity: 1; transform: none; }
-.reveal-stagger.visible > *:nth-child(4) { transition-delay: .35s; opacity: 1; transform: none; }
-.reveal-stagger.visible > *:nth-child(5) { transition-delay: .45s; opacity: 1; transform: none; }
-.reveal-stagger.visible > *:nth-child(6) { transition-delay: .55s; opacity: 1; transform: none; }
+.has-js .reveal-stagger.visible > *:nth-child(1) { transition-delay: .05s; opacity: 1; transform: none; }
+.has-js .reveal-stagger.visible > *:nth-child(2) { transition-delay: .15s; opacity: 1; transform: none; }
+.has-js .reveal-stagger.visible > *:nth-child(3) { transition-delay: .25s; opacity: 1; transform: none; }
+.has-js .reveal-stagger.visible > *:nth-child(4) { transition-delay: .35s; opacity: 1; transform: none; }
+.has-js .reveal-stagger.visible > *:nth-child(5) { transition-delay: .45s; opacity: 1; transform: none; }
+.has-js .reveal-stagger.visible > *:nth-child(6) { transition-delay: .55s; opacity: 1; transform: none; }
 
 /* Respect reduced motion */
 @media (prefers-reduced-motion: reduce) {

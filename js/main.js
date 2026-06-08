@@ -137,11 +137,20 @@ const $$ = (selector, context = document) => [...context.querySelectorAll(select
 
 /* ---------- INTERSECTION OBSERVER (reveal animations) ---------- */
 (function initReveal() {
-  if (!('IntersectionObserver' in window)) {
-    // Fallback: show all
+  const revealAll = () => {
     $$('.reveal, .reveal-stagger').forEach(el => el.classList.add('visible'));
+  };
+
+  if (!('IntersectionObserver' in window)) {
+    // Fallback: show all immediately
+    revealAll();
     return;
   }
+
+  // Safety net: ensure all content becomes visible after 3 seconds
+  // in case the observer misses any elements (e.g. tab in background,
+  // layout not yet settled, etc.)
+  const safetyTimer = setTimeout(revealAll, 3000);
 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -150,7 +159,11 @@ const $$ = (selector, context = document) => [...context.querySelectorAll(select
         observer.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    // If all elements are now visible, cancel the safety timer
+    if ($$('.reveal:not(.visible), .reveal-stagger:not(.visible)').length === 0) {
+      clearTimeout(safetyTimer);
+    }
+  }, { threshold: 0.05, rootMargin: '0px 0px 0px 0px' });
 
   $$('.reveal, .reveal-stagger').forEach(el => observer.observe(el));
 })();
